@@ -41,17 +41,11 @@ function createTwoDimensions(num) {
 }
 
 var output = createTwoDimensions(3);//[[1, 1, 0][0, 1, 1]]
-console.log(output);
 
-
-
-
-
-
-
-
-
-
+module.exports = {
+  createTwoDimensions,
+  fillColumn,
+};
 
 
 
