@@ -41,30 +41,34 @@ function createTwoDimensions(num) {
 }
 
 function addColor(twoDPlane, color) {
-  var output = twoDPlane.map((row) => {
+  return twoDPlane.map((row) => {
     row.push(color);
     return row;
   });
-  return output;
 }
 
-function convertCoordinates(twoDPlane, column1, column2, row) {
-  // iterate through the plan
-  // if index 0 !== 0 then make index 0 = to column1
-  // make index 1 === column2
-  // make index 2 === row
-  return twoDPlane.map((row) => {
+function convertCoordinates(twoDPlane, column1, column2, row1) {
+  return twoDPlane.map((row, i) => {
     if (row[0] !== 0) {
       row[0] = column1;
     }
     row[1] = column2;
-    row[2] = row;
+    row[2] += row1;
     return row;
   });
 }
 
+function convertToSenseHatString(row) {
+  if (row[0] === 0) {
+    return `${row[1]},${row[2]},${row[3]}`;
+  }
+  return `${row[0]}-${row[1]},${row[2]},${row[3]}`;
+}
+
 module.exports = {
   addColor,
+  convertCoordinates,
+  convertToSenseHatString,
   createTwoDimensions,
   fillColumn,
 };

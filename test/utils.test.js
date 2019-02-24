@@ -5,6 +5,8 @@ var should = chai.should();
 
 const {
   addColor,
+  convertCoordinates,
+  convertToSenseHatString,
   createTwoDimensions,
   fillColumn,
 } = require('../utils/tempAlgorithm');
@@ -45,6 +47,26 @@ describe('UTILS TESTING SUITE: ', () => {
       const twoDPlane = createTwoDimensions(3);
       const output = addColor(twoDPlane, '#C0C0C0');
       expect(output).to.eql([[1, 1, 0, '#C0C0C0'], [0, 1, 1, '#C0C0C0']]);
+    });
+  });
+
+  describe('convertCoordinates', () => {
+    it('Should add the correct coordinate values passed in for column and row', () => {
+      const twoDPlane = createTwoDimensions(3);
+      const colorTwoDPlane = addColor(twoDPlane, '#C0C0C0');
+      const output = convertCoordinates(colorTwoDPlane, 1, 2, 2);
+      expect(output).to.eql([[1, 2, 2, '#C0C0C0'], [0, 2, 3, '#C0C0C0']]);
+    });
+  });
+
+  describe('convertToSenseHatString', () => {
+    it('Should convert the array into a SenseHat string', () => {
+      const output = convertToSenseHatString([1, 2, 2, '#C0C0C0']);
+      expect(output).to.eql('1-2,2,#C0C0C0');
+    });
+    it('Should handle one column', () => {
+      const output = convertToSenseHatString([0, 2, 2, '#C0C0C0']);
+      expect(output).to.eql('2,2,#C0C0C0');
     });
   });
 });
