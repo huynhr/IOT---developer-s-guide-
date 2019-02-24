@@ -24,7 +24,7 @@ function fillColumn(n) {
   return [1, 1];
 }
 
-// a function that iterates through and creates the y-cordinate;
+// a function that iterates through and creates the y-coordinates;
 // output of this will be [[1, 1], [0, 1]] a matrix 2 by (n/2) where (n/2 is the rows);
 // 
 function createTwoDimensions(num) {
@@ -40,31 +40,31 @@ function createTwoDimensions(num) {
   return xyPlane;
 }
 
-var output = createTwoDimensions(3);//[[1, 1, 0][0, 1, 1]]
+function addColor(twoDPlane, color) {
+  var output = twoDPlane.map((row) => {
+    row.push(color);
+    return row;
+  });
+  return output;
+}
+
+function convertCoordinates(twoDPlane, column1, column2, row) {
+  // iterate through the plan
+  // if index 0 !== 0 then make index 0 = to column1
+  // make index 1 === column2
+  // make index 2 === row
+  return twoDPlane.map((row) => {
+    if (row[0] !== 0) {
+      row[0] = column1;
+    }
+    row[1] = column2;
+    row[2] = row;
+    return row;
+  });
+}
 
 module.exports = {
+  addColor,
   createTwoDimensions,
   fillColumn,
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
