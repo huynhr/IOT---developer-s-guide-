@@ -7,6 +7,7 @@ const {
   addColor,
   convertCoordinates,
   convertToSenseHatString,
+  createSenseHatLED,
   createSenseHatString,
   createTwoDimensions,
   fillColumn,
@@ -78,6 +79,17 @@ describe('UTILS TESTING SUITE: ', () => {
       const conCoordinates = convertCoordinates(twoDPlaneColor, 1, 2, 2);
       const output = createSenseHatString(conCoordinates);
       expect(output).to.eql('1-2,2,#C0C0C0,2,3,#C0C0C0');
+    });
+  });
+
+  describe('createSenseHatLED', () => {
+    it('Should glue all the helper functions together to make the string', () => {
+      const output = createSenseHatLED(3, '#C0C0C0', {col1: 1, col2: 2, row: 2});
+      expect(output).to.be.equal('1-2,2,#C0C0C0,2,3,#C0C0C0');
+    });
+    it('Should work with 0', () => {
+      const output = createSenseHatLED(0, '#C0C0C0', { col1: 1, col2: 2, row: 2 });
+      expect(output).to.be.equal('');
     });
   });
 });

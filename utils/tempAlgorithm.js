@@ -77,9 +77,20 @@ function createSenseHatString(twoDPlane) {
   return output;
 }
 
+function createSenseHatLED(n, color, coordinates) {
+  if (n === 0) {
+    return '';
+  }
+  const twoDPlane = createTwoDimensions(n);
+  const twoDPlaneColor = addColor(twoDPlane, color);
+  const conCoordinates = convertCoordinates(twoDPlaneColor, coordinates.col1, coordinates.col2, coordinates.row);
+  return createSenseHatString(conCoordinates);
+}
+
 module.exports = {
   addColor,
   convertCoordinates,
+  createSenseHatLED,
   convertToSenseHatString,
   createSenseHatString,
   createTwoDimensions,
