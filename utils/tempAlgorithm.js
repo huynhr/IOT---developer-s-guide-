@@ -65,10 +65,23 @@ function convertToSenseHatString(row) {
   return `${row[0]}-${row[1]},${row[2]},${row[3]}`;
 }
 
+function createSenseHatString(twoDPlane) {
+  let output = '';
+  twoDPlane.forEach((row) => {
+    if (output.length === 0) {
+      output += convertToSenseHatString(row);
+    } else {
+      output += ',' + convertToSenseHatString(row);
+    }
+  });
+  return output;
+}
+
 module.exports = {
   addColor,
   convertCoordinates,
   convertToSenseHatString,
+  createSenseHatString,
   createTwoDimensions,
   fillColumn,
 };

@@ -7,6 +7,7 @@ const {
   addColor,
   convertCoordinates,
   convertToSenseHatString,
+  createSenseHatString,
   createTwoDimensions,
   fillColumn,
 } = require('../utils/tempAlgorithm');
@@ -67,6 +68,16 @@ describe('UTILS TESTING SUITE: ', () => {
     it('Should handle one column', () => {
       const output = convertToSenseHatString([0, 2, 2, '#C0C0C0']);
       expect(output).to.eql('2,2,#C0C0C0');
+    });
+  });
+
+  describe('createSenseHatString', () => {
+    it('Should convert the 2D coordinates into a SenseHat String', () => {
+      const twoDPlane = createTwoDimensions(3);
+      const twoDPlaneColor = addColor(twoDPlane, '#C0C0C0');
+      const conCoordinates = convertCoordinates(twoDPlaneColor, 1, 2, 2);
+      const output = createSenseHatString(conCoordinates);
+      expect(output).to.eql('1-2,2,#C0C0C0,2,3,#C0C0C0');
     });
   });
 });
