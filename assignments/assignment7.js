@@ -1,5 +1,6 @@
 function Service(appClient) {
   this.appClient = appClient;
+  this.currentWarning;
 }
 
 Service.prototype.connect = function () {
@@ -14,34 +15,40 @@ Service.prototype.connect = function () {
   this.appClient.on('deviceEvent', function (deviceType, deviceId, eventType, format, payload) {
     // TODO act on device events and call handleTempEvent when the right type of event arrives
     var temp = Math.floor(JSON.parse(payload).d.temperature);
-    var data = this.handleTempEvent(temp);
-    data = JSON.stringify(data);
-    this.appClient.publishDeviceCommand('SenseHat', 'senb827eb7ddd6d', 'environment', 'json', data);
+    this.handleTempEvent(temp);
   }.bind(this));
 };
 
 Service.prototype.handleTempEvent = function (temp) {
   // TODO handle temperature changes here and call this.warningOn/this.warningOff accordingly.
-  if (!!temp) {
-    if (temp > 29) {
+  if (temp > 29) {
+    if (this.currentWarning === undefined) {
       return this.warningOn();
-    } else if (temp < 29) {
+    } else if (this.currentWarning.screen === 'off') {
+      return this.warningOn();
+    }
+    return this.warningOn();
+  } else if (temp < 29) {
+    if (this.currentWarning === undefined) {
+      return this.warningOff();
+    } else if (this.currentWarning.screen !== 'off') {
       return this.warningOff();
     }
-  } else {
-    return {};
   }
-
 };
 
 Service.prototype.warningOn = function () {
-  return { screen: "on" };
+  var output = { screen: "on" }
+  this.currentWarning = output;
+  return this.appClient.publishDeviceCommand('SenseHat', 'senb827eb7ddd6d', 'environment', 'json', JSON.stringify(output));
 };
 
 Service.prototype.warningOff = function () {
   // TODO send a device commmand here
   // warningOff should only be called when the warning isn't already off
-  return { screen: "off" };
+  var output = { screen: "off" }
+  this.currentWarning = output;
+  this.appClient.publishDeviceCommand('SenseHat', 'senb827eb7ddd6d', 'environment', 'json', JSON.stringify(output));
 };
 
 module.exports = Service;
