@@ -23,16 +23,15 @@ Service.prototype.handleTempEvent = function (temp) {
   // TODO handle temperature changes here and call this.warningOn/this.warningOff accordingly.
   if (temp > 29) {
     if (this.currentWarning === undefined) {
-      return this.warningOn();
+      this.warningOn();
     } else if (this.currentWarning.screen === 'off') {
-      return this.warningOn();
+      this.warningOn();
     }
-    return this.warningOn();
   } else if (temp < 29) {
     if (this.currentWarning === undefined) {
-      return this.warningOff();
-    } else if (this.currentWarning.screen !== 'off') {
-      return this.warningOff();
+      this.warningOff();
+    } else if (this.currentWarning.screen === 'on') {
+      this.warningOff();
     }
   }
 };
